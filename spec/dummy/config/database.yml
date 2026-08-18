@@ -1,0 +1,16 @@
+default: &default
+  adapter: postgresql
+  max_connections: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
+
+development:
+  <<: *default
+  database: pg_health_development
+
+test:
+  <<: *default
+  database: pg_health_test
+
+production:
+  <<: *default
+  # database: pg_health_production
