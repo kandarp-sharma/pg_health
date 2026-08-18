@@ -5,9 +5,9 @@ Gem::Specification.new do |spec|
   spec.version     = PgHealth::VERSION
   spec.authors     = [ "Kandarp Sharma" ]
   spec.email       = [ "sharma.kandarp24@gmail.com" ]
-  spec.homepage    = "TODO"
-  spec.summary     = "TODO: Summary of PgHealth."
-  spec.description = "TODO: Description of PgHealth."
+  spec.homepage    = "https://github.com/yourusername/pg_health"
+  spec.summary     = "PostgreSQL health monitoring dashboard."
+  spec.description = "A lightweight mountable dashboard for tracking PostgreSQL table bloat, dead tuples, and query health."
   spec.license     = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the "allowed_push_host"
@@ -15,8 +15,8 @@ Gem::Specification.new do |spec|
   spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
 
   spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "TODO: Put your gem's public repo URL here."
-  spec.metadata["changelog_uri"] = "TODO: Put your gem's CHANGELOG.md URL here."
+  # spec.metadata["source_code_uri"] = "https://github.com/your-username/pg_health"
+  # spec.metadata["changelog_uri"]   = "https://github.com/your-username/pg_health/blob/main/CHANGELOG.md"
 
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
     Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
@@ -26,4 +26,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "rails", ">= 7.0.0"
   spec.add_dependency "pg", ">= 1.1"
+
+  spec.add_development_dependency "rspec-rails", ">= 6.0"
+  spec.add_development_dependency "factory_bot_rails"
 end
