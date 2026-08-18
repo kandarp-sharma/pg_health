@@ -1,3 +1,6 @@
 PgHealth Dashboard
   Status: Connected
-  Database Footprint: <%= @database_size %>
+    Cache Hit Ratio: <%= @cache_hit_ratio %>
+    Dead Tupples: <%= @dead_tuples %>
+    Table Bloat: <%= @table_bloat %>
+    Unused Indexes: <%= @unused_indexes %>

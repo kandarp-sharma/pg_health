@@ -2,6 +2,23 @@ require "pg_health/version"
 require "pg_health/engine"
 
 module PgHealth
+  # Returns a hash of database names/roles configured for PostgreSQL
+  # e.g. { "primary" => "Primary", "primary_replica" => "Primary Replica" }
+  def self.available_databases
+    configs = ActiveRecord::Base.configurations.configs_for(env_name: Rails.env)
+
+    pg_configs = configs.select do |config|
+      config.adapter.to_s.include?("postgresql") || config.adapter.to_s.include?("postgis")
+    end
+
+    pg_configs.each_with_object({}) do |config, hash|
+      # 'config.name' is the correct method in Rails (e.g., "primary")
+      key = config.name
+      label = key.humanize.titleize
+      hash[key] = label
+    end
+  end
+
   class Configuration
     attr_accessor :cache_duration,
                   :dead_tuple_warning_threshold,
