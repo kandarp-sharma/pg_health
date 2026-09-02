@@ -1,17 +1,146 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pg health</title>
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
 
   <%= yield :head %>
 
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
   <%= stylesheet_link_tag    "pg_health/application", media: "all" %>
 </head>
-<body>
+<body class="dark">
+  <div class="layout">
+    <!-- Sidebar -->
+    <aside class="layout__sidebar hidden-mobile">
+      <div class="layout__header">
+        <span class="material-symbols-outlined layout__logo-icon">database</span>
+        <div class="layout__logo">PgHealth Gem</div>
+      </div>
+      <nav class="layout__nav">
+        <a class="nav-item active" href="1-overview-dashboard.html">
+          <span class="material-symbols-outlined nav-item__icon">dashboard</span>
+          Overview
+        </a>
+        <a class="nav-item" href="2-table-health.html">
+          <span class="material-symbols-outlined nav-item__icon">table_chart</span>
+          Table Health
+        </a>
+        <a class="nav-item" href="3-storage-bloat.html">
+          <span class="material-symbols-outlined nav-item__icon">storage</span>
+          Storage & Bloat
+        </a>
+        <a class="nav-item" href="4-index-tuning.html">
+          <span class="material-symbols-outlined nav-item__icon">tune</span>
+          Index Tuning
+        </a>
+        <a class="nav-item" href="5-locks-activity.html">
+          <span class="material-symbols-outlined nav-item__icon">lock_clock</span>
+          Locks & Activity
+        </a>
+      </nav>
+    </aside>
 
-<%= yield %>
+    <!-- Main Content -->
+    <div class="layout__main">
+      <!-- Top Navigation -->
+      <header class="layout__top-nav hidden-mobile">
+        <nav class="top-nav__tabs">
+          <!-- <a class="tab-link active" href="1-overview-dashboard.html">Overview</a>
+          <a class="tab-link" href="2-table-health.html">Table Health</a>
+          <a class="tab-link" href="3-storage-bloat.html">Storage & Bloat</a>
+          <a class="tab-link" href="4-index-tuning.html">Index Tuning</a>
+          <a class="tab-link" href="5-locks-activity.html">Locks & Activity</a> -->
+          <div class="top-nav__actions">
+            <div class="search-box">
+              <span class="material-symbols-outlined search-box__icon">search</span>
+              <input type="text" class="search-box__input" placeholder="Search databases...">
+            </div>
+            <button class="icon-button">
+              <span class="material-symbols-outlined">notifications</span>
+            </button>
+            <button class="icon-button">
+              <span class="material-symbols-outlined">settings</span>
+            </button>
+            <div class="avatar">A</div>
+          </div>
+        </nav>
+      </header>
+
+      <!-- Mobile Top Bar -->
+      <header class="layout__top-nav hidden-desktop">
+        <div class="hamburger-menu" id="hamburgerMenu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span class="material-symbols-outlined">database</span>
+          <span style="font: 600 16px / 24px 'Geist', sans-serif; color: var(--color-primary-container);">PgHealth Gem</span>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="icon-button">
+            <span class="material-symbols-outlined">notifications</span>
+          </button>
+          <button class="icon-button">
+            <span class="material-symbols-outlined">settings</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Mobile Menu -->
+      <nav class="mobile-menu" id="mobileMenu">
+        <a class="nav-item active" href="1-overview-dashboard.html">
+          <span class="material-symbols-outlined nav-item__icon">dashboard</span>
+          Overview
+        </a>
+        <a class="nav-item" href="2-table-health.html">
+          <span class="material-symbols-outlined nav-item__icon">table_chart</span>
+          Table Health
+        </a>
+        <a class="nav-item" href="3-storage-bloat.html">
+          <span class="material-symbols-outlined nav-item__icon">storage</span>
+          Storage & Bloat
+        </a>
+        <a class="nav-item" href="4-index-tuning.html">
+          <span class="material-symbols-outlined nav-item__icon">tune</span>
+          Index Tuning
+        </a>
+        <a class="nav-item" href="5-locks-activity.html">
+          <span class="material-symbols-outlined nav-item__icon">lock_clock</span>
+          Locks & Activity
+        </a>
+      </nav>
+
+      <%= yield %>
+      
+    </div>
+  </div>
 
 </body>
 </html>
+
+<script>
+  const hamburgerMenu = document.getElementById('hamburgerMenu');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  if (hamburgerMenu) {
+    hamburgerMenu.addEventListener('click', () => {
+      hamburgerMenu.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
+    });
+
+    if (mobileMenu) {
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          hamburgerMenu.classList.remove('active');
+          mobileMenu.classList.remove('active');
+        });
+      });
+    }
+  }
+</script>

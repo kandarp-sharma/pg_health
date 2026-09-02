@@ -1,6 +1,170 @@
-PgHealth Dashboard
-  Status: Connected
-    Cache Hit Ratio: <%= @cache_hit_ratio %>
-    Dead Tupples: <%= @dead_tuples %>
-    Table Bloat: <%= @table_bloat %>
-    Unused Indexes: <%= @unused_indexes %>
+<!-- Content -->
+<main class="layout__content">
+  <div class="content-wrapper">
+    <!-- Page Header -->
+    <div class="page-header">
+      <div>
+        <h1 class="page-header__title">Executive Overview</h1>
+        <p class="page-header__description">Database health snapshot across 4 instances, 156 tables.</p>
+      </div>
+      <div class="page-header__actions">
+        <button class="btn btn--secondary">
+          <span class="material-symbols-outlined btn-icon">refresh</span>
+          Refresh
+        </button>
+        <button class="btn btn--primary">
+          <span class="material-symbols-outlined btn-icon" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+          Run Full Analysis
+        </button>
+      </div>
+    </div>
+
+    <!-- Key Metrics Grid -->
+    <div class="grid grid--4-col">
+      <div class="metric-card">
+        <span class="metric-card__label">Database Health Score</span>
+        <span class="metric-card__value">92%</span>
+        <span class="metric-card__change">+3% from last hour</span>
+      </div>
+      <div class="metric-card">
+        <span class="metric-card__label">Total Table Size</span>
+        <span class="metric-card__value">247 GB</span>
+        <span class="metric-card__change">↑ 2.1% growth</span>
+      </div>
+      <div class="metric-card">
+        <span class="metric-card__label">Dead Tuples Avg</span>
+        <span class="metric-card__value metric-card__value--warning">12.4%</span>
+        <span class="metric-card__change">Within threshold</span>
+      </div>
+      <div class="metric-card">
+        <span class="metric-card__label">Queries/Minute</span>
+        <span class="metric-card__value">8,234</span>
+        <span class="metric-card__change">↓ 5% vs baseline</span>
+      </div>
+    </div>
+
+    <!-- Health Status by Instance -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-header__title">Instance Health Status</span>
+        <div class="card-header__actions">
+          <button class="icon-button" style="width: 32px; height: 32px;">
+            <span class="material-symbols-outlined">filter_list</span>
+          </button>
+        </div>
+      </div>
+      <div class="card-content">
+        <div class="table-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Instance</th>
+                <th>Status</th>
+                <th>CPU Usage</th>
+                <th>Memory</th>
+                <th>Disk I/O</th>
+                <th>Connections</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="table__cell-code">prod-primary-01</td>
+                <td><span class="badge badge--healthy"><span class="badge__dot"></span> Online</span></td>
+                <td class="table__cell-number">42%</td>
+                <td class="table__cell-number">68%</td>
+                <td class="table__cell-number">1.2 MB/s</td>
+                <td class="table__cell-number">124</td>
+              </tr>
+              <tr>
+                <td class="table__cell-code">prod-replica-01</td>
+                <td><span class="badge badge--healthy"><span class="badge__dot"></span> Online</span></td>
+                <td class="table__cell-number">38%</td>
+                <td class="table__cell-number">61%</td>
+                <td class="table__cell-number">0.8 MB/s</td>
+                <td class="table__cell-number">89</td>
+              </tr>
+              <tr>
+                <td class="table__cell-code">staging-primary-01</td>
+                <td><span class="badge badge--healthy"><span class="badge__dot"></span> Online</span></td>
+                <td class="table__cell-number">28%</td>
+                <td class="table__cell-number">44%</td>
+                <td class="table__cell-number">0.3 MB/s</td>
+                <td class="table__cell-number">34</td>
+              </tr>
+              <tr>
+                <td class="table__cell-code">dev-primary-01</td>
+                <td><span class="badge badge--warning"><span class="badge__dot"></span> Degraded</span></td>
+                <td class="table__cell-number">71%</td>
+                <td class="table__cell-number">85%</td>
+                <td class="table__cell-number">2.1 MB/s</td>
+                <td class="table__cell-number">156</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Critical Alerts -->
+    <div class="grid grid--2-col">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-header__title">Critical Alerts (3)</span>
+        </div>
+        <div class="card-content">
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div style="padding: 12px; background-color: var(--color-surface-container-highest); border-radius: 4px; border-left: 3px solid var(--color-error);">
+              <div style="font: 600 13px / 18px 'Inter', sans-serif; color: var(--color-error); margin-bottom: 4px;">High Dead Tuple Ratio</div>
+              <div style="font: 400 12px / 16px 'Inter', sans-serif; color: var(--color-on-surface-variant);">users_sessions_log: 28.4% dead tuples detected</div>
+            </div>
+            <div style="padding: 12px; background-color: var(--color-surface-container-highest); border-radius: 4px; border-left: 3px solid var(--color-tertiary);">
+              <div style="font: 600 13px / 18px 'Inter', sans-serif; color: var(--color-tertiary); margin-bottom: 4px;">Maintenance Window Due</div>
+              <div style="font: 400 12px / 16px 'Inter', sans-serif; color: var(--color-on-surface-variant);">Full VACUUM recommended for 5 tables</div>
+            </div>
+            <div style="padding: 12px; background-color: var(--color-surface-container-highest); border-radius: 4px; border-left: 3px solid var(--color-tertiary);">
+              <div style="font: 600 13px / 18px 'Inter', sans-serif; color: var(--color-tertiary); margin-bottom: 4px;">Index Bloat Detection</div>
+              <div style="font: 400 12px / 16px 'Inter', sans-serif; color: var(--color-on-surface-variant);">Payment transactions index at 45% bloat</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-header__title">System Performance</span>
+        </div>
+        <div class="card-content">
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                <span style="font: 400 13px / 18px 'Inter', sans-serif; color: var(--color-on-surface-variant);">Autovacuum Efficiency</span>
+                <span style="font: 500 12px / 16px 'JetBrains Mono', monospace; color: var(--color-on-surface);">84%</span>
+              </div>
+              <div class="progress">
+                <div class="progress__bar" style="width: 84%;"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                <span style="font: 400 13px / 18px 'Inter', sans-serif; color: var(--color-on-surface-variant);">Cache Hit Ratio</span>
+                <span style="font: 500 12px / 16px 'JetBrains Mono', monospace; color: var(--color-on-surface);">96%</span>
+              </div>
+              <div class="progress">
+                <div class="progress__bar" style="width: 96%;"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                <span style="font: 400 13px / 18px 'Inter', sans-serif; color: var(--color-on-surface-variant);">Checkpoint Health</span>
+                <span style="font: 500 12px / 16px 'JetBrains Mono', monospace; color: var(--color-on-surface);">92%</span>
+              </div>
+              <div class="progress">
+                <div class="progress__bar" style="width: 92%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
