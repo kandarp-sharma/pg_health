@@ -1,0 +1,256 @@
+<main class="layout__content">
+  <div class="content-wrapper">
+    <!-- Page Header -->
+    <div class="page-header">
+      <div>
+        <h1 class="page-header__title">Lock Contention & Active Queries</h1>
+        <p class="page-header__description">Real-time monitoring of blocked queries and lock conflicts.</p>
+      </div>
+      <div class="page-header__actions">
+        <button class="btn btn--secondary">
+          <span class="material-symbols-outlined btn-icon">refresh</span>
+          Refresh
+        </button>
+        <button class="btn btn--primary">
+          <span class="material-symbols-outlined btn-icon">cancel</span>
+          Cancel Long Queries
+        </button>
+      </div>
+    </div>
+
+    <!-- Key Metrics -->
+    <div class="grid grid--4-col">
+      <div class="metric-card">
+        <span class="metric-card__label">Active Connections</span>
+        <span class="metric-card__value">247</span>
+        <span class="metric-card__change">Max: 400 connections</span>
+      </div>
+      <div class="metric-card">
+        <span class="metric-card__label">Queries/Second</span>
+        <span class="metric-card__value">8,234</span>
+        <span class="metric-card__change">↓ 5% vs baseline</span>
+      </div>
+      <div class="metric-card">
+        <span class="metric-card__label">Blocked Queries</span>
+        <span class="metric-card__value metric-card__value--error">3</span>
+        <span class="metric-card__change">Max wait: 45s</span>
+      </div>
+      <div class="metric-card">
+        <span class="metric-card__label">Avg Query Time</span>
+        <span class="metric-card__value">124 ms</span>
+        <span class="metric-card__change">↑ 8% from normal</span>
+      </div>
+    </div>
+
+    <!-- Lock Conflicts & Slow Queries -->
+    <div class="grid grid--2-col">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-header__title">Current Lock Conflicts (3)</span>
+        </div>
+        <div class="card-content">
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div style="padding: 12px; background-color: var(--color-surface-container-highest); border-radius: 4px; border-left: 3px solid var(--color-error);">
+              <div style="font: 600 13px / 18px 'Inter', sans-serif; color: var(--color-error); margin-bottom: 4px;">UPDATE blocked by SELECT</div>
+              <div style="font: 400 12px / 16px 'JetBrains Mono', monospace; color: var(--color-on-surface); margin-bottom: 4px;">UPDATE orders SET status=… WHERE id=1234</div>
+              <div style="font: 400 12px / 16px 'Inter', sans-serif; color: var(--color-on-surface-variant);">Waiting: 45s | Lock: ExclusiveLock</div>
+            </div>
+            <div style="padding: 12px; background-color: var(--color-surface-container-highest); border-radius: 4px; border-left: 3px solid var(--color-error);">
+              <div style="font: 600 13px / 18px 'Inter', sans-serif; color: var(--color-error); margin-bottom: 4px;">DELETE blocked by INDEX</div>
+              <div style="font: 400 12px / 16px 'JetBrains Mono', monospace; color: var(--color-on-surface); margin-bottom: 4px;">DELETE FROM transactions WHERE…</div>
+              <div style="font: 400 12px / 16px 'Inter', sans-serif; color: var(--color-on-surface-variant);">Waiting: 23s | Lock: ExclusiveLock</div>
+            </div>
+            <div style="padding: 12px; background-color: var(--color-surface-container-highest); border-radius: 4px; border-left: 3px solid var(--color-tertiary);">
+              <div style="font: 600 13px / 18px 'Inter', sans-serif; color: var(--color-tertiary); margin-bottom: 4px;">VACUUM blocked by SELECT</div>
+              <div style="font: 400 12px / 16px 'JetBrains Mono', monospace; color: var(--color-on-surface); margin-bottom: 4px;">VACUUM ANALYZE user_profiles</div>
+              <div style="font: 400 12px / 16px 'Inter', sans-serif; color: var(--color-on-surface-variant);">Waiting: 12s | Lock: AccessShareLock</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-header__title">Slowest Queries (Top 5)</span>
+        </div>
+        <div class="card-content">
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                <span style="font: 400 12px / 16px 'Inter', sans-serif; color: var(--color-on-surface-variant);">Complex JOIN on events</span>
+                <span style="font: 600 12px / 16px 'JetBrains Mono', monospace; color: var(--color-error);">3,240 ms</span>
+              </div>
+              <div class="progress">
+                <div class="progress__bar progress__bar--error" style="width: 100%;"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                <span style="font: 400 12px / 16px 'Inter', sans-serif; color: var(--color-on-surface-variant);">Full table scan orders</span>
+                <span style="font: 600 12px / 16px 'JetBrains Mono', monospace; color: var(--color-error);">2,180 ms</span>
+              </div>
+              <div class="progress">
+                <div class="progress__bar progress__bar--error" style="width: 67%;"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                <span style="font: 400 12px / 16px 'Inter', sans-serif; color: var(--color-on-surface-variant);">Aggregation payment_tx</span>
+                <span style="font: 600 12px / 16px 'JetBrains Mono', monospace; color: var(--color-tertiary);">1,850 ms</span>
+              </div>
+              <div class="progress">
+                <div class="progress__bar progress__bar--warning" style="width: 57%;"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                <span style="font: 400 12px / 16px 'Inter', sans-serif; color: var(--color-on-surface-variant);">Nested SELECT user_profile</span>
+                <span style="font: 600 12px / 16px 'JetBrains Mono', monospace; color: var(--color-tertiary);">742 ms</span>
+              </div>
+              <div class="progress">
+                <div class="progress__bar progress__bar--warning" style="width: 23%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Queries - Desktop -->
+    <div class="card hidden-desktop" style="display: none;">
+      <div class="card-header">
+        <span class="card-header__title">Active Queries (real-time)</span>
+        <div class="card-header__actions">
+          <button class="icon-button" style="width: 32px; height: 32px;">
+            <span class="material-symbols-outlined">filter_list</span>
+          </button>
+        </div>
+      </div>
+      <div class="card-content">
+        <div class="table-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>PID</th>
+                <th>User</th>
+                <th>Query</th>
+                <th>Duration</th>
+                <th>State</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="table__cell-code">12847</td>
+                <td class="table__cell-code">app_user</td>
+                <td class="table__cell-code" style="max-width: 300px; overflow: hidden; text-overflow: ellipsis;">SELECT * FROM orders o JOIN …</td>
+                <td class="table__cell-number">3,240 ms</td>
+                <td class="table__cell-code">active</td>
+                <td><span class="badge badge--critical"><span class="badge__dot"></span> SLOW</span></td>
+              </tr>
+              <tr>
+                <td class="table__cell-code">12923</td>
+                <td class="table__cell-code">api_worker</td>
+                <td class="table__cell-code" style="max-width: 300px; overflow: hidden; text-overflow: ellipsis;">UPDATE orders SET status WHERE…</td>
+                <td class="table__cell-number">45,230 ms</td>
+                <td class="table__cell-code">waiting</td>
+                <td><span class="badge badge--critical"><span class="badge__dot"></span> BLOCKED</span></td>
+              </tr>
+              <tr>
+                <td class="table__cell-code">12934</td>
+                <td class="table__cell-code">reports</td>
+                <td class="table__cell-code" style="max-width: 300px; overflow: hidden; text-overflow: ellipsis;">SELECT COUNT(*) FROM user_activity…</td>
+                <td class="table__cell-number">1,200 ms</td>
+                <td class="table__cell-code">active</td>
+                <td><span class="badge badge--warning"><span class="badge__dot"></span> WARNING</span></td>
+              </tr>
+              <tr>
+                <td class="table__cell-code">12945</td>
+                <td class="table__cell-code">analytics</td>
+                <td class="table__cell-code" style="max-width: 300px; overflow: hidden; text-overflow: ellipsis;">SELECT * FROM events WHERE…</td>
+                <td class="table__cell-number">234 ms</td>
+                <td class="table__cell-code">active</td>
+                <td><span class="badge badge--healthy"><span class="badge__dot"></span> HEALTHY</span></td>
+              </tr>
+              <tr>
+                <td class="table__cell-code">12856</td>
+                <td class="table__cell-code">maintenance</td>
+                <td class="table__cell-code" style="max-width: 300px; overflow: hidden; text-overflow: ellipsis;">VACUUM ANALYZE user_profiles</td>
+                <td class="table__cell-number">12,450 ms</td>
+                <td class="table__cell-code">waiting</td>
+                <td><span class="badge badge--warning"><span class="badge__dot"></span> WAITING</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Queries - Mobile -->
+    <div class="card-list hidden-desktop">
+      <div class="card-header" style="margin-bottom: 8px;">
+        <span class="card-header__title">Active Queries (real-time)</span>
+      </div>
+      
+      <div class="card-list-item">
+        <div class="card-list-item__header">
+          <div>
+            <div class="card-list-item__title">PID: 12847</div>
+            <div class="card-list-item__subtitle">User: app_user</div>
+          </div>
+          <span class="badge badge--critical"><span class="badge__dot"></span> SLOW</span>
+        </div>
+        <div class="card-list-item__body">
+          <div class="card-list-item__field">
+            <span class="card-list-item__field-label">Duration</span>
+            <span class="card-list-item__field-value text-error">3,240 ms</span>
+          </div>
+          <div class="card-list-item__field">
+            <span class="card-list-item__field-label">State</span>
+            <span class="card-list-item__field-value">active</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-list-item">
+        <div class="card-list-item__header">
+          <div>
+            <div class="card-list-item__title">PID: 12923</div>
+            <div class="card-list-item__subtitle">User: api_worker</div>
+          </div>
+          <span class="badge badge--critical"><span class="badge__dot"></span> BLOCKED</span>
+        </div>
+        <div class="card-list-item__body">
+          <div class="card-list-item__field">
+            <span class="card-list-item__field-label">Duration</span>
+            <span class="card-list-item__field-value text-error">45,230 ms</span>
+          </div>
+          <div class="card-list-item__field">
+            <span class="card-list-item__field-label">State</span>
+            <span class="card-list-item__field-value">waiting</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-list-item">
+        <div class="card-list-item__header">
+          <div>
+            <div class="card-list-item__title">PID: 12934</div>
+            <div class="card-list-item__subtitle">User: reports</div>
+          </div>
+          <span class="badge badge--warning"><span class="badge__dot"></span> WARNING</span>
+        </div>
+        <div class="card-list-item__body">
+          <div class="card-list-item__field">
+            <span class="card-list-item__field-label">Duration</span>
+            <span class="card-list-item__field-value text-warning">1,200 ms</span>
+          </div>
+          <div class="card-list-item__field">
+            <span class="card-list-item__field-label">State</span>
+            <span class="card-list-item__field-value">active</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

@@ -1,0 +1,212 @@
+<main class="layout__content">
+  <div class="content-wrapper">
+    <!-- Page Header -->
+    <div class="page-header">
+      <div>
+        <h1 class="page-header__title">Table Health & Autovacuum</h1>
+        <p class="page-header__description">Monitor dead tuples and hot updates for 124 tables.</p>
+      </div>
+      <div class="page-header__actions">
+        <button class="btn btn--primary">
+          <span class="material-symbols-outlined btn-icon" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+          Trigger Manual Analyze All
+        </button>
+      </div>
+    </div>
+
+    <!-- Summary Metrics -->
+    <div class="grid grid--4-col">
+      <div class="metric-card">
+        <span class="metric-card__label">Avg Dead Tuples</span>
+        <span class="metric-card__value metric-card__value--warning">12.4%</span>
+      </div>
+      <div class="metric-card">
+        <span class="metric-card__label">Hot Updates</span>
+        <span class="metric-card__value metric-card__value--success">84.2%</span>
+      </div>
+      <div class="metric-card">
+        <span class="metric-card__label">Tables Needing Vacuum</span>
+        <span class="metric-card__value metric-card__value--error">8</span>
+      </div>
+      <div class="metric-card">
+        <span class="metric-card__label">Last Autovacuum Avg</span>
+        <span class="metric-card__value">2.3h ago</span>
+      </div>
+    </div>
+
+    <!-- Tables List - Desktop -->
+    <div class="card hidden-desktop" style="display: none;">
+      <div class="card-header">
+        <span class="card-header__title">Tables (order by dead tuples desc)</span>
+        <div class="card-header__actions">
+          <button class="icon-button" style="width: 32px; height: 32px;">
+            <span class="material-symbols-outlined">filter_list</span>
+          </button>
+        </div>
+      </div>
+      <div class="card-content">
+        <div class="table-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Table Name</th>
+                <th>Total Rows</th>
+                <th>Dead Tuples</th>
+                <th>Hot Update %</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="table__cell-code">users_sessions_log</td>
+                <td class="table__cell-number">14,200,432</td>
+                <td class="table__cell-number text-error">24.5%</td>
+                <td>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <div class="progress" style="flex: 1;">
+                      <div class="progress__bar progress__bar--error" style="width: 42%;"></div>
+                    </div>
+                    <span style="font: 500 12px / 16px 'JetBrains Mono', monospace; color: var(--color-on-surface-variant); min-width: 30px; text-align: right;">42%</span>
+                  </div>
+                </td>
+                <td><span class="badge badge--critical"><span class="badge__dot"></span> Critical</span></td>
+              </tr>
+              <tr>
+                <td class="table__cell-code">payment_transactions</td>
+                <td class="table__cell-number">8,432,109</td>
+                <td class="table__cell-number text-warning">15.2%</td>
+                <td>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <div class="progress" style="flex: 1;">
+                      <div class="progress__bar progress__bar--warning" style="width: 65%;"></div>
+                    </div>
+                    <span style="font: 500 12px / 16px 'JetBrains Mono', monospace; color: var(--color-on-surface-variant); min-width: 30px; text-align: right;">65%</span>
+                  </div>
+                </td>
+                <td><span class="badge badge--warning"><span class="badge__dot"></span> Warning</span></td>
+              </tr>
+              <tr>
+                <td class="table__cell-code">user_profiles</td>
+                <td class="table__cell-number">2,100,000</td>
+                <td class="table__cell-number">2.1%</td>
+                <td>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <div class="progress" style="flex: 1;">
+                      <div class="progress__bar" style="width: 98%;"></div>
+                    </div>
+                    <span style="font: 500 12px / 16px 'JetBrains Mono', monospace; color: var(--color-on-surface-variant); min-width: 30px; text-align: right;">98%</span>
+                  </div>
+                </td>
+                <td><span class="badge badge--healthy"><span class="badge__dot"></span> Healthy</span></td>
+              </tr>
+              <tr>
+                <td class="table__cell-code">order_items</td>
+                <td class="table__cell-number">12,540,821</td>
+                <td class="table__cell-number text-warning">18.7%</td>
+                <td>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <div class="progress" style="flex: 1;">
+                      <div class="progress__bar progress__bar--warning" style="width: 72%;"></div>
+                    </div>
+                    <span style="font: 500 12px / 16px 'JetBrains Mono', monospace; color: var(--color-on-surface-variant); min-width: 30px; text-align: right;">72%</span>
+                  </div>
+                </td>
+                <td><span class="badge badge--warning"><span class="badge__dot"></span> Warning</span></td>
+              </tr>
+              <tr>
+                <td class="table__cell-code">product_catalog</td>
+                <td class="table__cell-number">542,108</td>
+                <td class="table__cell-number">4.3%</td>
+                <td>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <div class="progress" style="flex: 1;">
+                      <div class="progress__bar" style="width: 91%;"></div>
+                    </div>
+                    <span style="font: 500 12px / 16px 'JetBrains Mono', monospace; color: var(--color-on-surface-variant); min-width: 30px; text-align: right;">91%</span>
+                  </div>
+                </td>
+                <td><span class="badge badge--healthy"><span class="badge__dot"></span> Healthy</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tables List - Mobile -->
+    <div class="card-list hidden-desktop">
+      <div class="card-header" style="margin-bottom: 8px;">
+        <span class="card-header__title">Tables (order by dead tuples desc)</span>
+      </div>
+      
+      <div class="card-list-item">
+        <div class="card-list-item__header">
+          <div>
+            <div class="card-list-item__title">users_sessions_log</div>
+            <div class="card-list-item__subtitle">Total Rows: 14,200,432</div>
+          </div>
+          <span class="badge badge--critical"><span class="badge__dot"></span> Critical</span>
+        </div>
+        <div class="card-list-item__body">
+          <div class="card-list-item__field">
+            <span class="card-list-item__field-label">Dead Tuples</span>
+            <span class="card-list-item__field-value text-error">24.5%</span>
+          </div>
+          <div class="card-list-item__field">
+            <span class="card-list-item__field-label">Hot Update %</span>
+            <div class="progress" style="margin-top: 4px;">
+              <div class="progress__bar progress__bar--error" style="width: 42%;"></div>
+            </div>
+            <span style="font: 500 12px / 16px 'JetBrains Mono', monospace; color: var(--color-on-surface-variant); margin-top: 4px;">42%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-list-item">
+        <div class="card-list-item__header">
+          <div>
+            <div class="card-list-item__title">payment_transactions</div>
+            <div class="card-list-item__subtitle">Total Rows: 8,432,109</div>
+          </div>
+          <span class="badge badge--warning"><span class="badge__dot"></span> Warning</span>
+        </div>
+        <div class="card-list-item__body">
+          <div class="card-list-item__field">
+            <span class="card-list-item__field-label">Dead Tuples</span>
+            <span class="card-list-item__field-value text-warning">15.2%</span>
+          </div>
+          <div class="card-list-item__field">
+            <span class="card-list-item__field-label">Hot Update %</span>
+            <div class="progress" style="margin-top: 4px;">
+              <div class="progress__bar progress__bar--warning" style="width: 65%;"></div>
+            </div>
+            <span style="font: 500 12px / 16px 'JetBrains Mono', monospace; color: var(--color-on-surface-variant); margin-top: 4px;">65%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-list-item">
+        <div class="card-list-item__header">
+          <div>
+            <div class="card-list-item__title">user_profiles</div>
+            <div class="card-list-item__subtitle">Total Rows: 2,100,000</div>
+          </div>
+          <span class="badge badge--healthy"><span class="badge__dot"></span> Healthy</span>
+        </div>
+        <div class="card-list-item__body">
+          <div class="card-list-item__field">
+            <span class="card-list-item__field-label">Dead Tuples</span>
+            <span class="card-list-item__field-value">2.1%</span>
+          </div>
+          <div class="card-list-item__field">
+            <span class="card-list-item__field-label">Hot Update %</span>
+            <div class="progress" style="margin-top: 4px;">
+              <div class="progress__bar" style="width: 98%;"></div>
+            </div>
+            <span style="font: 500 12px / 16px 'JetBrains Mono', monospace; color: var(--color-on-surface-variant); margin-top: 4px;">98%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

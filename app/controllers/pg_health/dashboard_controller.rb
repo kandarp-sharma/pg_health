@@ -1,6 +1,6 @@
 module PgHealth
   class DashboardController < ApplicationController
-    def index
+    def overview_dashboard
       @databases = PgHealth.available_databases
       @selected_db = params[:db].presence && @databases.key?(params[:db]) ? params[:db] : @databases.keys.first || "primary"
 
@@ -10,6 +10,18 @@ module PgHealth
       @dead_tuples     = collector.dead_tuples
       @table_bloat     = collector.table_bloat
       @unused_indexes  = collector.unused_indexes
+    end
+
+    def table_health
+    end
+
+    def storage_bloat
+    end
+
+    def index_tuning
+    end
+
+    def locks_activity
     end
   end
 end

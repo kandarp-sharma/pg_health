@@ -1,0 +1,240 @@
+<main class="layout__content">
+  <div class="content-wrapper">
+    <!-- Page Header -->
+    <div class="page-header">
+      <div>
+        <h1 class="page-header__title">Index Efficiency & Tuning</h1>
+        <p class="page-header__description">Monitor index bloat, unused indexes, and optimization opportunities.</p>
+      </div>
+      <div class="page-header__actions">
+        <button class="btn btn--secondary">
+          <span class="material-symbols-outlined btn-icon">refresh</span>
+          Analyze Indexes
+        </button>
+      </div>
+    </div>
+
+    <!-- Key Metrics -->
+    <div class="grid grid--4-col">
+      <div class="metric-card">
+        <span class="metric-card__label">Total Indexes</span>
+        <span class="metric-card__value">842</span>
+        <span class="metric-card__change">Across 124 tables</span>
+      </div>
+      <div class="metric-card">
+        <span class="metric-card__label">Index Bloat Avg</span>
+        <span class="metric-card__value metric-card__value--warning">18.7%</span>
+        <span class="metric-card__change">↑ 2.3% from last week</span>
+      </div>
+      <div class="metric-card">
+        <span class="metric-card__label">Unused Indexes</span>
+        <span class="metric-card__value metric-card__value--warning">18</span>
+        <span class="metric-card__change">Candidates for removal</span>
+      </div>
+      <div class="metric-card">
+        <span class="metric-card__label">Missing Indexes</span>
+        <span class="metric-card__value metric-card__value--error">7</span>
+        <span class="metric-card__change">High-impact opportunities</span>
+      </div>
+    </div>
+
+    <!-- Index Health & Missing Indexes -->
+    <div class="grid grid--2-col">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-header__title">Index Health Distribution</span>
+        </div>
+        <div class="card-content">
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <span style="font: 400 13px / 18px 'Inter', sans-serif; color: var(--color-on-surface-variant);">Healthy (0-5% bloat)</span>
+                <span style="font: 600 13px / 18px 'Inter', sans-serif; color: var(--color-on-surface);">734 indexes</span>
+              </div>
+              <div class="progress">
+                <div class="progress__bar" style="width: 87%;"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <span style="font: 400 13px / 18px 'Inter', sans-serif; color: var(--color-on-surface-variant);">Warning (5-20% bloat)</span>
+                <span style="font: 600 13px / 18px 'Inter', sans-serif; color: var(--color-on-surface);">78 indexes</span>
+              </div>
+              <div class="progress">
+                <div class="progress__bar progress__bar--warning" style="width: 9%;"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <span style="font: 400 13px / 18px 'Inter', sans-serif; color: var(--color-on-surface-variant);">Critical (>20% bloat)</span>
+                <span style="font: 600 13px / 18px 'Inter', sans-serif; color: var(--color-on-surface);">30 indexes</span>
+              </div>
+              <div class="progress">
+                <div class="progress__bar progress__bar--error" style="width: 4%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-header__title">Missing Indexes (High Impact)</span>
+        </div>
+        <div class="card-content">
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div style="padding: 12px; background-color: var(--color-surface-container-highest); border-radius: 4px; border-left: 3px solid var(--color-secondary);">
+              <div style="font: 500 12px / 16px 'JetBrains Mono', monospace; color: var(--color-on-surface); margin-bottom: 4px;">idx_users_email_status</div>
+              <div style="font: 400 12px / 16px 'Inter', sans-serif; color: var(--color-on-surface-variant);">Estimated: 2.4M queries saved/day</div>
+            </div>
+            <div style="padding: 12px; background-color: var(--color-surface-container-highest); border-radius: 4px; border-left: 3px solid var(--color-secondary);">
+              <div style="font: 500 12px / 16px 'JetBrains Mono', monospace; color: var(--color-on-surface); margin-bottom: 4px;">idx_orders_created_user_id</div>
+              <div style="font: 400 12px / 16px 'Inter', sans-serif; color: var(--color-on-surface-variant);">Estimated: 1.8M queries saved/day</div>
+            </div>
+            <div style="padding: 12px; background-color: var(--color-surface-container-highest); border-radius: 4px; border-left: 3px solid var(--color-secondary);">
+              <div style="font: 500 12px / 16px 'JetBrains Mono', monospace; color: var(--color-on-surface); margin-bottom: 4px;">idx_payments_status_date</div>
+              <div style="font: 400 12px / 16px 'Inter', sans-serif; color: var(--color-on-surface-variant);">Estimated: 1.2M queries saved/day</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Indexes List - Desktop -->
+    <div class="card hidden-desktop" style="display: none;">
+      <div class="card-header">
+        <span class="card-header__title">Index Performance Analysis</span>
+        <div class="card-header__actions">
+          <button class="icon-button" style="width: 32px; height: 32px;">
+            <span class="material-symbols-outlined">filter_list</span>
+          </button>
+        </div>
+      </div>
+      <div class="card-content">
+        <div class="table-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Index Name</th>
+                <th>Table</th>
+                <th>Scans</th>
+                <th>Size</th>
+                <th>Bloat %</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="table__cell-code">idx_payment_tx_user</td>
+                <td class="table__cell-code">payment_transactions</td>
+                <td class="table__cell-number">1,245,832</td>
+                <td class="table__cell-number">284 MB</td>
+                <td class="table__cell-number text-error">32.1%</td>
+                <td><span class="badge badge--critical"><span class="badge__dot"></span> REBUILD</span></td>
+              </tr>
+              <tr>
+                <td class="table__cell-code">idx_orders_created</td>
+                <td class="table__cell-code">orders</td>
+                <td class="table__cell-number">8,934,201</td>
+                <td class="table__cell-number">512 MB</td>
+                <td class="table__cell-number text-warning">18.4%</td>
+                <td><span class="badge badge--warning"><span class="badge__dot"></span> REINDEX</span></td>
+              </tr>
+              <tr>
+                <td class="table__cell-code">idx_users_email</td>
+                <td class="table__cell-code">users</td>
+                <td class="table__cell-number">12,445,678</td>
+                <td class="table__cell-number">342 MB</td>
+                <td class="table__cell-number">2.3%</td>
+                <td><span class="badge badge--healthy"><span class="badge__dot"></span> HEALTHY</span></td>
+              </tr>
+              <tr>
+                <td class="table__cell-code">idx_events_unused_old</td>
+                <td class="table__cell-code">events</td>
+                <td class="table__cell-number">0</td>
+                <td class="table__cell-number">128 MB</td>
+                <td class="table__cell-number">—</td>
+                <td><span class="badge badge--critical"><span class="badge__dot"></span> UNUSED</span></td>
+              </tr>
+              <tr>
+                <td class="table__cell-code">idx_products_sku</td>
+                <td class="table__cell-code">product_catalog</td>
+                <td class="table__cell-number">2,342,108</td>
+                <td class="table__cell-number">64 MB</td>
+                <td class="table__cell-number">5.2%</td>
+                <td><span class="badge badge--healthy"><span class="badge__dot"></span> HEALTHY</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Indexes List - Mobile -->
+    <div class="card-list hidden-desktop">
+      <div class="card-header" style="margin-bottom: 8px;">
+        <span class="card-header__title">Index Performance Analysis</span>
+      </div>
+      
+      <div class="card-list-item">
+        <div class="card-list-item__header">
+          <div>
+            <div class="card-list-item__title">idx_payment_tx_user</div>
+            <div class="card-list-item__subtitle">Table: payment_transactions</div>
+          </div>
+          <span class="badge badge--critical"><span class="badge__dot"></span> REBUILD</span>
+        </div>
+        <div class="card-list-item__body">
+          <div class="card-list-item__field">
+            <span class="card-list-item__field-label">Scans</span>
+            <span class="card-list-item__field-value">1.2M</span>
+          </div>
+          <div class="card-list-item__field">
+            <span class="card-list-item__field-label">Bloat %</span>
+            <span class="card-list-item__field-value text-error">32.1%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-list-item">
+        <div class="card-list-item__header">
+          <div>
+            <div class="card-list-item__title">idx_orders_created</div>
+            <div class="card-list-item__subtitle">Table: orders</div>
+          </div>
+          <span class="badge badge--warning"><span class="badge__dot"></span> REINDEX</span>
+        </div>
+        <div class="card-list-item__body">
+          <div class="card-list-item__field">
+            <span class="card-list-item__field-label">Scans</span>
+            <span class="card-list-item__field-value">8.9M</span>
+          </div>
+          <div class="card-list-item__field">
+            <span class="card-list-item__field-label">Bloat %</span>
+            <span class="card-list-item__field-value text-warning">18.4%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-list-item">
+        <div class="card-list-item__header">
+          <div>
+            <div class="card-list-item__title">idx_users_email</div>
+            <div class="card-list-item__subtitle">Table: users</div>
+          </div>
+          <span class="badge badge--healthy"><span class="badge__dot"></span> HEALTHY</span>
+        </div>
+        <div class="card-list-item__body">
+          <div class="card-list-item__field">
+            <span class="card-list-item__field-label">Scans</span>
+            <span class="card-list-item__field-value">12.4M</span>
+          </div>
+          <div class="card-list-item__field">
+            <span class="card-list-item__field-label">Bloat %</span>
+            <span class="card-list-item__field-value">2.3%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
