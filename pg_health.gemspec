@@ -5,7 +5,7 @@ Gem::Specification.new do |spec|
   spec.version     = PgHealth::VERSION
   spec.authors     = [ "Kandarp Sharma" ]
   spec.email       = [ "sharma.kandarp24@gmail.com" ]
-  spec.homepage    = "https://github.com/yourusername/pg_health"
+  spec.homepage    = "https://github.com/kandarp-sharma/pg_health"
   spec.summary     = "PostgreSQL health monitoring dashboard."
   spec.description = "A lightweight mountable dashboard for tracking PostgreSQL table bloat, dead tuples, and query health."
   spec.license     = "MIT"
@@ -15,8 +15,8 @@ Gem::Specification.new do |spec|
   spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
 
   spec.metadata["homepage_uri"] = spec.homepage
-  # spec.metadata["source_code_uri"] = "https://github.com/your-username/pg_health"
-  # spec.metadata["changelog_uri"]   = "https://github.com/your-username/pg_health/blob/main/CHANGELOG.md"
+  # spec.metadata["source_code_uri"] = "https://github.com/kandarp-sharma/pg_health"
+  # spec.metadata["changelog_uri"]   = "https://github.com/kandarp-sharma/pg_health/blob/main/CHANGELOG.md"
 
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
     Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
